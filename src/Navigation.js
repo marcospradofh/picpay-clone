@@ -5,6 +5,8 @@ import { AntDesign, Ionicons} from '@expo/vector-icons';
 import HomeScreen from './screens/Home';
 import WalletScreen from './screens/Wallet';
 import PayScreen from './screens/Pay';
+import PayButton from './components/PayButton';
+import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio';
 
 const Tab = createBottomTabNavigator();
 
@@ -34,12 +36,25 @@ const icons = {
 export default function Navigation() {
   return (
     <Tab.Navigator
-      screenOptions={( { route }) => ({
-        tabBarIcon: ({ color, size }) => {
+      screenOptions={( { route, navigation }) => ({
+        tabBarIcon: ({ color, size, focused }) => {
+          if (route.name === 'Pay') return (
+            <PayButton
+              onPress={() => navigation.navigate('Pay')}
+              focused
+            />)
           const { lib: Icon, name} = icons[route.name];
           return <Icon name={name} size={size} color={color} />
         },
       })}
+      tabBarOptions={{
+        style: {
+          backgroundColor: '#131418',
+          borderTopColor: 'rgba(255, 255, 255, 0.2)',
+        },
+        activeTintColor: '#fff',
+        inactiveTintColor: '#93939c'
+      }}
     >
       <Tab.Screen 
         name="Home"
@@ -59,7 +74,7 @@ export default function Navigation() {
         name="Pay"
         component={PayScreen}
         options={{
-          title: "Pagar"
+          title: ""
         }}
       />
       <Tab.Screen
