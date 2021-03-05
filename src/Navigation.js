@@ -41,7 +41,7 @@ export default function Navigation() {
           if (route.name === 'Pay') return (
             <PayButton
               onPress={() => navigation.navigate('Pay')}
-              focused
+              focused={focused}
             />)
           const { lib: Icon, name} = icons[route.name];
           return <Icon name={name} size={size} color={color} />
